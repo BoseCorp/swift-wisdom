@@ -23,10 +23,10 @@ final class RxRepeatingTimeoutsTests: XCTestCase {
         let scheduler = TestScheduler(initialClock: 0)
         let observable: Observable<TestElement> =
             scheduler.createColdObservable([
-                next(8, .element),
-                next(9, .element),
-                next(15, .element),
-                next(16, .element)
+                Recorded.next(8, .element),
+                Recorded.next(9, .element),
+                Recorded.next(15, .element),
+                Recorded.next(16, .element)
             ])
             .ip_repeatingTimeouts(
                 interval: .seconds(5),

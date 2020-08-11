@@ -18,11 +18,11 @@ final class RxDelayElementsTests: XCTestCase {
         let scheduler = TestScheduler(initialClock: 0)
         let observable =
             scheduler.createColdObservable([
-                next(0, 0),
-                next(1, 1),
-                next(2, 2),
-                next(3, 3),
-                next(4, 4)
+                Recorded.next(0, 0),
+                Recorded.next(1, 1),
+                Recorded.next(2, 2),
+                Recorded.next(3, 3),
+                Recorded.next(4, 4)
             ])
             .ip_delayElements(
                 matching: { $0 >= 2 },
@@ -50,11 +50,11 @@ final class RxDelayElementsTests: XCTestCase {
         let scheduler = TestScheduler(initialClock: 0)
         let observable =
             scheduler.createColdObservable([
-                next(0, 0),
-                next(1, 1),
-                next(2, 2),
-                next(3, 3),
-                next(4, 4)
+                Recorded.next(0, 0),
+                Recorded.next(1, 1),
+                Recorded.next(2, 2),
+                Recorded.next(3, 3),
+                Recorded.next(4, 4)
             ])
             .ip_delayElements(
                 matching: { $0 % 2 == 0 },
