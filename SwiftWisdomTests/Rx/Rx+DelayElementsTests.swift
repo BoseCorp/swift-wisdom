@@ -26,7 +26,7 @@ final class RxDelayElementsTests: XCTestCase {
             ])
             .ip_delayElements(
                 matching: { $0 >= 2 },
-                by: 2,
+                by: .seconds(2),
                 scheduler: scheduler
             )
         let observer = scheduler.createObserver(Int.self)
@@ -58,7 +58,7 @@ final class RxDelayElementsTests: XCTestCase {
             ])
             .ip_delayElements(
                 matching: { $0 % 2 == 0 },
-                by: 2,
+                by: .seconds(2),
                 scheduler: scheduler
             )
         let observer = scheduler.createObserver(Int.self)
