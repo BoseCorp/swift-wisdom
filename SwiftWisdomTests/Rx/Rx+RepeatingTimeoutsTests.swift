@@ -29,7 +29,7 @@ final class RxRepeatingTimeoutsTests: XCTestCase {
                 next(16, .element)
             ])
             .ip_repeatingTimeouts(
-                interval: 5,
+                interval: .seconds(5),
                 element: .timeout,
                 scheduler: scheduler
             )
