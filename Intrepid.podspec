@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.source        = { :git => "https://github.com/IntrepidPursuits/swift-wisdom.git", :tag => "#{s.version}" }
   s.exclude_files = "tests/**/*"
   s.platform      = :ios
-  s.ios.deployment_target = "12.0"
+  s.ios.deployment_target = "10.0"
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
   s.default_subspec = "Core"
   s.swift_versions = ['4.2', '5.0']
