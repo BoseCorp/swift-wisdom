@@ -6,30 +6,30 @@ import RxCocoa
 
 class OperatorTests: XCTestCase {
 
-    func testVariableBinding() {
+    func testBehaviorRelayBinding() {
         let disposeBag = DisposeBag()
         let label = UILabel()
-        let variable = BehaviorRelay<String?>(value: nil)
+        let relay = BehaviorRelay<String?>(value: nil)
 
-        label.rx.text <- variable >>> disposeBag
+        label.rx.text <- relay >>> disposeBag
         XCTAssertEqual(nil, label.text)
 
-        variable.accept("hello")
+        relay.accept("hello")
         XCTAssertEqual("hello", label.text)
 
-        variable.accept(nil)
+        relay.accept(nil)
         XCTAssertEqual(nil, label.text)
     }
 
-    func testNonOptionalVariableBindingToOptionalObserver() {
+    func testNonOptionalBehaviorRelayBindingToOptionalObserver() {
         let disposeBag = DisposeBag()
         let label = UILabel()
-        let variable = BehaviorRelay<String>(value: "")
+        let relay = BehaviorRelay<String>(value: "")
 
-        label.rx.text <- variable >>> disposeBag
+        label.rx.text <- relay >>> disposeBag
         XCTAssertEqual("", label.text)
 
-        variable.accept("hello")
+        relay.accept("hello")
         XCTAssertEqual("hello", label.text)
     }
 
@@ -42,52 +42,12 @@ class OperatorTests: XCTestCase {
         XCTAssertEqual("hello", button.title(for: .normal))
     }
 
-    func testBindingToVariable() {
-        let disposeBag = DisposeBag()
-        let sut = BehaviorRelay<String>(value: "")
-        let variable = BehaviorRelay<String>(value: "hello")
-
-        sut <- variable >>> disposeBag
-        XCTAssertEqual(variable.value, sut.value)
-        XCTAssertEqual("hello", sut.value)
-
-        variable.accept("world")
-        XCTAssertEqual(variable.value, sut.value)
-    }
-
     func testAddCompositeDisposable() {
         let compositeDisposable = CompositeDisposable()
         let observable = Observable<String?>.never()
         XCTAssertEqual(0, compositeDisposable.count)
         UILabel().rx.text <- observable >>> compositeDisposable
         XCTAssertEqual(1, compositeDisposable.count)
-    }
-    
-    func testBehaviorRelayBinding() {
-        let disposeBag = DisposeBag()
-        let label = UILabel()
-        let behaviorRelay = BehaviorRelay<String?>(value: nil)
-        
-        label.rx.text <- behaviorRelay >>> disposeBag
-        XCTAssertEqual(nil, label.text)
-        
-        behaviorRelay.accept("hello")
-        XCTAssertEqual("hello", label.text)
-        
-        behaviorRelay.accept(nil)
-        XCTAssertEqual(nil, label.text)
-    }
-    
-    func testNonOptionalBehaviorRelayBindingToOptionalObserver() {
-        let disposeBag = DisposeBag()
-        let label = UILabel()
-        let behaviorRelay = BehaviorRelay<String>(value: "")
-
-        label.rx.text <- behaviorRelay >>> disposeBag
-        XCTAssertEqual("", label.text)
-        
-        behaviorRelay.accept("hello")
-        XCTAssertEqual("hello", label.text)
     }
     
     func testBindingToBehaviorRelay() {
@@ -115,20 +75,6 @@ class OperatorTests: XCTestCase {
         textField.text = "world"
         textField.sendActions(for: .editingChanged)
         XCTAssertEqual("world", behaviorRelay.value)
-    }
-    
-    func testTwoWayBindingWithVariable() {
-        let disposeBag = DisposeBag()
-        let textField = UITextField()
-        let variable = BehaviorRelay<String?>(value: nil)
-        
-        textField.rx.text <-> variable >>> disposeBag
-        variable.accept("hello")
-        XCTAssertEqual("hello", textField.text)
-        
-        textField.text = "world"
-        textField.sendActions(for: .editingChanged)
-        XCTAssertEqual("world", variable.value)
     }
 
 }
