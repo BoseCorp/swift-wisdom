@@ -41,29 +41,9 @@ public func <- <T: ObserverType, O>(observer: T, variable: O) -> Disposable wher
     return observer <- BehaviorRelay(value: variable)
 }
 
-//public func <- <T, O: ObservableType>(variable: T, observable: O) -> Disposable where O.Element == T {
-//    return variable <- observable.asObservable()
-//}
-
 public func <- <T>(observer: BehaviorRelay<T>, observable: BehaviorRelay<T>) -> Disposable {
     return observer <- observable.asObservable()
 }
-
-//public func <- <T: ObserverType, O>(observer: T, variable: Variable<O>) -> Disposable where T.Element == O {
-//    return observer <- variable.asObservable()
-//}
-//
-//public func <- <T: ObserverType, O>(observer: T, variable: Variable<O>) -> Disposable where T.Element == O? {
-//    return observer <- variable.asObservable()
-//}
-//
-//public func <- <T, O: ObservableType>(variable: Variable<T>, observable: O) -> Disposable where O.Element == T {
-//    return observable.bind(to: variable)
-//}
-//
-//public func <- <T>(observer: Variable<T>, observable: Variable<T>) -> Disposable {
-//    return observer <- observable.asObservable()
-//}
 
 public func <- <T: ObserverType, O>(observer: T, behaviorRelay: BehaviorRelay<O>) -> Disposable where T.Element == O {
     return observer <- behaviorRelay.asObservable()
@@ -76,10 +56,6 @@ public func <- <T: ObserverType, O>(observer: T, behaviorRelay: BehaviorRelay<O>
 public func <- <T, O: ObservableType>(behaviorRelay: BehaviorRelay<T>, observable: O) -> Disposable where O.Element == T {
     return observable.bind(to: behaviorRelay)
 }
-
-//public func <- <T>(observer: BehaviorRelay<T>, observable: BehaviorRelay<T>) -> Disposable {
-//    return observer <- observable.asObservable()
-//}
 
 public func >>> (disposable: Disposable, disposeBag: DisposeBag) {
     disposeBag.insert(disposable)
@@ -95,23 +71,6 @@ public func >>> (disposable: Disposable, compositeDisposable: CompositeDisposabl
 //  Created by Krunoslav Zaher on 12/6/15.
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //  https://github.com/ReactiveX/RxSwift/blob/master/RxExample/RxExample/Operators.swift
-//public func <-> <T>(property: ControlProperty<T>, variable: Variable<T>) -> Disposable {
-//    let bindToUIDisposable = variable
-//        .asObservable()
-//        .bind(to: property)
-//    let bindToVariable = property
-//        .subscribe(
-//            onNext: { next in
-//                variable.value = next
-//            },
-//            onCompleted: {
-//                bindToUIDisposable.dispose()
-//            }
-//    )
-//
-//    return Disposables.create(bindToUIDisposable, bindToVariable)
-//}
-
 public func <-> <T>(property: ControlProperty<T>, behaviorRelay: BehaviorRelay<T>) -> Disposable {
     let bindToUIDisposable = behaviorRelay
         .asObservable()
