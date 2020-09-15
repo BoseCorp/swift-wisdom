@@ -22,10 +22,10 @@ extension ObservableType {
      - returns: New observable sequence as described.
      */
     public func ip_delayElements(
-            matching predicate: @escaping (E) -> Bool,
-            by delayTime: RxTimeInterval,
-            scheduler: SchedulerType = MainScheduler.instance
-        ) -> Observable<E> {
+        matching predicate: @escaping (Element) -> Bool,
+        by delayTime: RxTimeInterval,
+        scheduler: SchedulerType = MainScheduler.instance
+    ) -> Observable<Element> {
         return
             Observable.of(
                 filter(predicate).delay(delayTime, scheduler: scheduler),

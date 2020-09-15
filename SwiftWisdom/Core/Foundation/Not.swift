@@ -6,7 +6,7 @@
 //  Copyright © 2015 Intrepid. All rights reserved.
 //
 
-/**
+/*
  Inverts a given boolean closure
  
       let newNames = ["Joe", "Betty"].filter(!existingNames.contains)
